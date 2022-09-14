@@ -1,0 +1,21 @@
+(define (split-at lst n)
+	(define (helper head tail n)
+		(if (null? tail) (cons head tail)
+			(if (> n 0) (helper (append head (list (car tail))) (cdr tail) (- n 1))
+				(cons head tail)
+			)
+		)
+	)
+	(helper nil lst n)
+)
+
+
+(define-macro (switch expr cases)
+	 (cons 'cond
+	   (map (lambda (case) (cons (list 'eq? expr (car case)) (cdr case)))
+    			cases))
+)
+(define x 'b)
+(switch x ((a (print 'a))
+                (b (print 'b))
+                (c (print 'c))))
